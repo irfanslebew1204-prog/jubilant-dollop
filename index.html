@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>irfanslebew1204-prog, belajar coding dari HP</title>
+<meta name="description" content="Portofolio seorang pemula yang belajar coding dari HP Android lewat Termux, Git, dan GitHub.">
+<meta name="theme-color" content="#0f1423">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%238e9bff'/%3E%3Cpath d='M9 11l6 5-6 5' fill='none' stroke='%230f1423' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M18 22h6' stroke='%230f1423' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Source+Serif+4:opsz,wght@8..60,400..600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f1423;
+    --panel: #171e36;
+    --line: #2a3354;
+    --text: #e9ebf5;
+    --muted: #a2abc6;
+    --accent: #8e9bff;
+    --display: "Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
+    --body: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--ink);
+    color: var(--text);
+    font: 400 1.0625rem/1.7 var(--body);
+  }
+
+  a { color: var(--accent); text-underline-offset: 0.2em; }
+  a:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  .wrap { width: min(100% - 2rem, 42rem); margin-inline: auto; }
+
+  /* Header */
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    font-family: var(--display);
+    font-weight: 600;
+  }
+  .top a { font-weight: 500; }
+
+  /* Hero */
+  .hero { padding: 2.75rem 0 2.5rem; }
+  .hero h1 {
+    margin: 0 0 1rem;
+    font: 800 clamp(2.4rem, 10vw, 3.9rem) / 1.03 var(--display);
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+  .lead {
+    max-width: 34rem;
+    margin: 0 0 2rem;
+    color: var(--muted);
+    font-size: 1.1875rem;
+  }
+
+  /* Riwayat commit */
+  .term {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 1rem 1.1rem;
+    font: 400 0.9rem / 1.7 var(--mono);
+  }
+  .term p { margin: 0; overflow-wrap: anywhere; }
+  .prompt { color: var(--muted); }
+  .hash { color: var(--accent); }
+  .note {
+    margin: 0.75rem 0 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .term .line {
+      opacity: 0;
+      animation: show 0.01s linear forwards;
+      animation-delay: calc(var(--i) * 0.4s + 0.3s);
+    }
+    .term .line.done { opacity: 1; animation: none; }
+  }
+  @keyframes show { to { opacity: 1; } }
+
+  /* Bagian */
+  .sec { padding: 2.25rem 0; border-top: 1px solid var(--line); }
+  .sec h2 {
+    margin: 0 0 1rem;
+    font: 700 1.5rem / 1.2 var(--display);
+    letter-spacing: -0.01em;
+  }
+  .sec p { margin: 0 0 1rem; max-width: 36rem; }
+  .sec p:last-child { margin-bottom: 0; }
+
+  /* Alat */
+  .tools { margin: 0; }
+  .tools div { padding: 0.9rem 0; border-top: 1px solid var(--line); }
+  .tools div:first-child { padding-top: 0; border-top: 0; }
+  .tools dt { font: 600 1.05rem / 1.4 var(--display); }
+  .tools dd { margin: 0.15rem 0 0; color: var(--muted); }
+  @media (min-width: 36rem) {
+    .tools div { display: grid; grid-template-columns: 11rem 1fr; gap: 1rem; }
+    .tools dd { margin: 0; }
+  }
+
+  /* Proyek */
+  .projects { list-style: none; margin: 0; padding: 0; }
+  .projects li { padding: 1rem 0; border-top: 1px solid var(--line); }
+  .projects li:first-child { padding-top: 0; border-top: 0; }
+  .p-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.25rem 1rem;
+  }
+  .p-head h3 { margin: 0; font: 600 1.15rem / 1.3 var(--display); }
+  .status { font: 400 0.875rem var(--mono); color: var(--muted); }
+  .status.on { color: var(--accent); }
+  .projects p { margin: 0.3rem 0 0; color: var(--muted); }
+
+  /* Tombol */
+  .btn {
+    display: inline-block;
+    padding: 0.8rem 1.25rem;
+    background: var(--accent);
+    color: var(--ink);
+    font: 600 1rem var(--display);
+    text-decoration: none;
+    border-radius: 10px;
+  }
+  .btn:hover { background: #a9b4ff; }
+  .btn:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
+
+  .foot { padding: 1.5rem 0 3rem; color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+
+<header class="wrap top">
+  <!-- Ganti dengan namamu kalau mau -->
+  <span>irfanslebew1204-prog</span>
+  <a href="https://github.com/irfanslebew1204-prog">GitHub</a>
+</header>
+
+<main>
+  <div class="wrap hero">
+    <h1>Belajar coding dari HP, satu commit sekali.</h1>
+    <p class="lead">Kode saya ditulis dan diunggah dari HP Android, lewat Termux dan Git. Di bawah ini riwayat asli repositori portofolio ini.</p>
+
+    <div class="term" id="log" role="group" aria-label="Riwayat commit terbaru">
+      <p class="line prompt" style="--i:0">~/jubilant-dollop $ git log --oneline</p>
+      <p class="line commit" style="--i:1"><span class="hash">815c5c8</span> tes dari termux</p>
+      <p class="line commit" style="--i:2"><span class="hash">d048220</span> Initial commit</p>
+    </div>
+    <p class="note" id="log-note">Riwayat commit repositori ini.</p>
+  </div>
+
+  <section class="wrap sec" aria-labelledby="tentang">
+    <h2 id="tentang">Tentang saya</h2>
+    <!-- Ganti paragraf ini dengan ceritamu sendiri -->
+    <p>Saya sedang belajar membuat aplikasi dan script kecil langsung di HP, tanpa laptop. Prosesnya pelan, tapi setiap langkah tersimpan di GitHub, jadi perkembangannya bisa dilihat di riwayat commit di atas.</p>
+  </section>
+
+  <section class="wrap sec" aria-labelledby="alat">
+    <h2 id="alat">Yang saya pakai</h2>
+    <dl class="tools">
+      <div><dt>Termux</dt><dd>Terminal Linux di Android, tempat saya menjalankan Git dan script.</dd></div>
+      <div><dt>Git dan GitHub</dt><dd>Menyimpan kode beserta riwayat perubahannya.</dd></div>
+      <div><dt>CodeAssist</dt><dd>Menulis aplikasi Android langsung di HP.</dd></div>
+      <div><dt>Python</dt><dd>Script kecil untuk pekerjaan yang berulang.</dd></div>
+    </dl>
+  </section>
+
+  <section class="wrap sec" aria-labelledby="proyek">
+    <h2 id="proyek">Proyek</h2>
+    <!-- Ubah, tambah, atau hapus proyek sesuai kemajuanmu -->
+    <ul class="projects">
+      <li>
+        <div class="p-head"><h3>Portofolio ini</h3><span class="status on">Berjalan</span></div>
+        <p>Halaman satu file dengan HTML, CSS, dan sedikit JavaScript, tayang lewat GitHub Pages.</p>
+      </li>
+      <li>
+        <div class="p-head"><h3>Monitor kuota data</h3><span class="status">Rencana</span></div>
+        <p>Aplikasi Android yang menampilkan pemakaian data dan statistiknya di notifikasi.</p>
+      </li>
+      <li>
+        <div class="p-head"><h3>Game catur Android</h3><span class="status">Rencana</span></div>
+        <p>Papan catur dengan aturan langkah dan lawan komputer sederhana.</p>
+      </li>
+    </ul>
+  </section>
+
+  <section class="wrap sec" aria-labelledby="kontak">
+    <h2 id="kontak">Kontak</h2>
+    <p>Kode dan riwayat perubahannya ada di GitHub.</p>
+    <p><a class="btn" href="https://github.com/irfanslebew1204-prog">Buka profil GitHub</a></p>
+  </section>
+</main>
+
+<footer class="wrap foot">Diunggah dari Termux lewat Git.</footer>
+
+<script>
+  // Mengambil riwayat commit terbaru dari GitHub. Kalau gagal, daftar bawaan di HTML tetap tampil.
+  (function () {
+    var term = document.getElementById('log');
+    var note = document.getElementById('log-note');
+    var url = 'https://api.github.com/repos/irfanslebew1204-prog/jubilant-dollop/commits?per_page=6';
+
+    fetch(url, { headers: { Accept: 'application/vnd.github+json' } })
+      .then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+      .then(function (list) {
+        if (!Array.isArray(list) || list.length === 0) return;
+
+        term.querySelectorAll('.commit').forEach(function (el) { el.remove(); });
+
+        list.forEach(function (item) {
+          var row = document.createElement('p');
+          row.className = 'line commit done';
+
+          var hash = document.createElement('span');
+          hash.className = 'hash';
+          hash.textContent = item.sha.slice(0, 7);
+
+          var message = String(item.commit.message || '').split('\n')[0];
+          row.appendChild(hash);
+          row.appendChild(document.createTextNode(' ' + message));
+          term.appendChild(row);
+        });
+
+        note.textContent = 'Diambil langsung dari GitHub, jadi bertambah setiap saya push.';
+      })
+      .catch(function () { /* biarkan daftar bawaan */ });
+  })();
+</script>
+</body>
+</html>
